@@ -1,0 +1,2 @@
+tm-python @ git+https://github.com/cms-l1-globaltrigger/tm-python.git@0.9.1
+Jinja2==2.11.*
