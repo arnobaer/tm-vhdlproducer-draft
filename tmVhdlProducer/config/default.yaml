@@ -1,0 +1,105 @@
+version: 3
+resources:
+  mapping:
+    cuts:
+      Mass: mass
+      DeltaEta: deta
+      DeltaPhi: dphi
+      DeltaR: dr
+      ChargeCorrelation: chgcor
+      OvRmDeltaR: ormdr
+    objects:
+      Muon: muon
+      Egamma: calo
+      Jet: calo
+      Tau: calo
+      ETMHF: esum
+      ETM: esum
+      ETT: esum
+      HTT: esum
+      MBT0HFM: esum
+      MBT0HFP: esum
+      EXT: external
+    conditions:
+      MinBiasHFM0: esum
+      MinBiasHFP0: esum
+      Externals: external
+      MissingEtHF: esum
+      MissingEt: esum
+      TotalHt: esum
+      TotalEt: esum
+      InvariantMass: mass
+      SingleMuon: comb
+      DoubleMuon: comb
+      TripleMuon: comb
+      QuadMuon: comb
+      SingleEgamma: comb
+      DoubleEgamma: comb
+      TripleEgamma: comb
+      SingleJet: comb
+      DoubleJet: comb
+      TripleJet: comb
+      QuadJet: comb
+      SingleTau: comb
+      DoubleTau: comb
+      QuadTau: comb
+      TransverseMass: mass
+      MuonMuonCorrelation: corr
+      CaloCaloCorrelation: corr
+      CaloMuonCorrelation: corr
+      InvariantMassOvRm: corrorm
+  floor:
+    slice_luts: 121
+    processors: 4
+    brams: 22
+  ceiling:
+    slice_luts: 250000
+    processors: 4000
+    brams: 12000
+  algorithm:
+    slice_luts: 1
+  condition:
+    - type: corr
+      slice_luts: 1
+      objects:
+        - type: [muon, muon]
+          slice_luts: 1
+          cuts:
+            - type: mass
+              slice_luts: 2
+    - type: mass
+      slice_luts: 2
+      objects:
+        - type: [muon, muon]
+          cuts:
+            - type: mass
+              slice_luts: 4
+              processors: 29
+        - type: [muon, calo]
+          cuts:
+            - type: mass
+              slice_luts: 4
+              processors: 24
+    - type: comb
+      objects:
+        - type: [muon, muon]
+          cuts:
+            - type: mass
+              slice_luts: 2
+  object_bx:
+    - type: muon
+      slice_luts: 2
+    - type: calo
+      slice_luts: 1
+    - type: esum
+      slice_luts: 1
+    - type: external
+  correlation_bx:
+    - type: [muon, muon]
+      slice_luts: 3
+    - type: [muon, calo]
+      slice_luts: 3
+    - type: [calo, calo]
+      slice_luts: 2
+    - type: [calo, esum]
+      slice_luts: 2
